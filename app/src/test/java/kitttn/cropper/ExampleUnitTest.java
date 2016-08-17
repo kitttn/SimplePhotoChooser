@@ -1,4 +1,4 @@
-package kitttn.testfeatures;
+package kitttn.cropper;
 
 import org.junit.Test;
 

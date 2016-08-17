@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="kitttn.testfeatures">
+          package="kitttn.cropper">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -11,16 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name="kitttn.cropper.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".CropActivity"/>
-        <activity android:name=".PhotoChooserCropperActivity"
+        <activity android:name="kitttn.cropper.CropActivity"/>
+        <activity android:name="kitttn.cropper.PhotoChooserCropperActivity"
                   android:theme="@style/Theme.AppCompat.Light.Dialog"/>
-        <activity android:name=".RxShadowPermissionActivity"/>
+        <activity
+            android:name="kitttn.cropper.RxShadowPermissionActivity"
+            android:theme="@style/Theme.TransparentActivity"/>
     </application>
 </manifest>

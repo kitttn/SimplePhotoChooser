@@ -1,4 +1,4 @@
-package kitttn.testfeatures;
+package kitttn.cropper;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -41,6 +41,7 @@ public class CropActivity extends AppCompatActivity {
     private static final float maxWidth = 1024.0f;
 
     private Uri fileURI;
+    private boolean cropToSquare = true;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -66,7 +67,9 @@ public class CropActivity extends AppCompatActivity {
         });
 
         fileURI = getIntent().getParcelableExtra("IMAGE_PATH");
+        cropToSquare = getIntent().getBooleanExtra("CROP_SQUARE", true);
 
+        view.setCropMode(cropToSquare ? CropImageView.CropMode.RATIO_1_1 : CropImageView.CropMode.RATIO_FREE);
         view.post(() -> compressBitmapAndUpload(fileURI));
     }
 

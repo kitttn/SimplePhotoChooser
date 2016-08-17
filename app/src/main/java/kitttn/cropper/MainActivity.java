@@ -1,4 +1,4 @@
-package kitttn.testfeatures;
+package kitttn.cropper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,10 +18,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         Button click = (Button) findViewById(R.id.mainClick);
-        click.setOnClickListener(view -> {
-            Intent i = new Intent(this, PhotoChooserCropperActivity.class);
-            startActivityForResult(i, 41);
-        });
+        click.setOnClickListener(view -> PhotoChooserCropperActivity.start(this, 41, false));
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {

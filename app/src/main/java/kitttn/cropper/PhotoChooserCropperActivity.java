@@ -1,4 +1,4 @@
-package kitttn.testfeatures;
+package kitttn.cropper;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
@@ -27,8 +26,8 @@ public class PhotoChooserCropperActivity extends ListActivity {
     private static final Integer GALLERY_REQUEST_CODE = 1;
     private static final int CROP_PHOTO_REQUEST_CODE = 101;
     private Uri imagePath;
-    private AtomicBoolean actionTriggered = new AtomicBoolean(false);
     private AlertDialog dialog;
+    private boolean cropToSquare = true;
 
     public void showChooser() {
         RxPermissionManager mgr = RxPermissionManager.getInstance(this);
@@ -48,6 +47,7 @@ public class PhotoChooserCropperActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cropToSquare = getIntent().getBooleanExtra("SQUARE_CROP", true);
         showChooser();
     }
 
@@ -68,7 +68,6 @@ public class PhotoChooserCropperActivity extends ListActivity {
         setListAdapter(list);
 
         getListView().setOnItemClickListener((adapterView, view, i, l) -> {
-            actionTriggered.set(true);
             if (i == 0) onCameraChosen();
             else onGalleryChosen();
         });
@@ -143,8 +142,20 @@ public class PhotoChooserCropperActivity extends ListActivity {
 
         if (resultCode == Activity.RESULT_OK) {
             Intent intent = new Intent(this, CropActivity.class);
+            intent.putExtra("CROP_SQUARE", cropToSquare);
             intent.putExtra("IMAGE_PATH", imagePath);
             startActivityForResult(intent, CROP_PHOTO_REQUEST_CODE);
         }
+    }
+
+    // ==================== static initializing ================
+
+    public static void start(Activity launchFrom, int requestCode) {
+        start(launchFrom, requestCode, true);
+    }
+    public static void start(Activity launchFrom, int requestCode, boolean cropToSquare) {
+        Intent i = new Intent(launchFrom, PhotoChooserCropperActivity.class);
+        i.putExtra("SQUARE_CROP", cropToSquare);
+        launchFrom.startActivityForResult(i, requestCode);
     }
 }
